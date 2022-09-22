@@ -4,7 +4,7 @@ Design link (https://www.figma.com/file/FlbG7J2VyBejAYtOM9MTEr/Untitled?node-id=
 
 - Create a log in page.
 - the route should be "/sign-in"
-- Your log in page should ask for email and password
+- Your log in page should ask for email, password, user image url. 
 - When the users clicks the sign in button the application state should update;
 - Use the "useState" hook in app.js to store the user state.
 - Send a callback that changes the state to your user log in page. (put the user data in the mock data file in the state)

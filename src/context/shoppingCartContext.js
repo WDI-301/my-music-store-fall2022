@@ -12,8 +12,6 @@ function ShoppingCartContextProvider(props) {
 
   const [shoppingCart, setShoppingCart] = useState(shoppingCartInitialState);
 
-  console.log('shopping cart state: ', shoppingCart);
-
   const addToCart = (productData) => {
     // Check if the product already exist in the shopping cart
     const productFound = shoppingCart.find((cartItem) => cartItem.id === productData.id);

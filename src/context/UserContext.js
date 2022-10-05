@@ -12,7 +12,7 @@ export const userContext = createContext();
 const reducer = (state, action) => {
   switch (action.type) {
     case SIGN_IN: {
-      return { ...state, user: { ...action.payload.userData } };
+      return action.payload.userData;
     }
     case SIGN_OUT: {
       return undefined;

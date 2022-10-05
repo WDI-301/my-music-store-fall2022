@@ -1,13 +1,16 @@
 import {
   Box, Button, TextField, Typography,
 } from '@mui/material';
-import { useContext, useState } from 'react';
-import { userContext } from '../../context/userContext';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { sampleUserData } from '../../mockData';
+import { signIn, signOut } from '../../redux-state/userSlice';
 import Layout from '../layout/Layout';
 
 function SignInPage() {
-  const { user, signIn, signOut } = useContext(userContext);
+  const user = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
 
   const [signInForm, setSignInForm] = useState({
     email: '',
@@ -16,7 +19,13 @@ function SignInPage() {
 
   const onSubmit = () => {
     // set the mock user as the user
-    signIn(sampleUserData);
+    // signIn(sampleUserData);
+
+    dispatch(signIn(sampleUserData));
+  };
+
+  const handleSignOut = () => {
+    dispatch(signOut());
   };
 
   if (user) {
@@ -31,7 +40,7 @@ function SignInPage() {
           </Typography>
         </Box>
         <Box>
-          <Button variant="contained" onClick={signOut}>Sign out</Button>
+          <Button variant="contained" onClick={handleSignOut}>Sign out</Button>
         </Box>
       </Layout>
     );

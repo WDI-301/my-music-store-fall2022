@@ -6,13 +6,12 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { shoppingCartContext, useShoppingCart } from '../../context/shoppingCartContext';
-import { userContext } from '../../context/userContext';
+import { useShoppingCart } from '../../context/shoppingCartContext';
 
 export default function Header() {
-  const { user, signIn, signOut } = useContext(userContext);
+  const user = useSelector((state) => state.user);
 
   const { shoppingCart } = useShoppingCart();
 

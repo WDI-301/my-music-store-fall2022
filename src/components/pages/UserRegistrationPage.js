@@ -11,6 +11,7 @@ import Layout from '../layout/Layout';
 function UserRegistrationPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [error, setError] = useState();
 
   const [userRegistrationForm, setUserRegistrationForm] = useState({
     firstName: '',
@@ -23,18 +24,24 @@ function UserRegistrationPage() {
   const handleSubmit = async (event) => {
     // Make sure our form is correct. a.k.a. validation.
     event.preventDefault();
-    // if everything is valid in the form
-    // submit the network request.
-    const response = await Axios.post('/register-user', {
-      ...userRegistrationForm,
-    });
 
-    const { user } = response.data;
-    // receive user information from server and put it in the state.
-    dispatch(signIn(user));
+    try {
+      // if everything is valid in the form
+      // submit the network request.
+      const response = await Axios.post('/register-user', {
+        ...userRegistrationForm,
+      });
 
-    // Navigate back to home page
-    navigate('/');
+      const { user } = response.data;
+      // receive user information from server and put it in the state.
+      dispatch(signIn(user));
+
+      // Navigate back to home page
+      navigate('/');
+    } catch (e) {
+      // send a copy of your errors to a database
+      setError(e.message);
+    }
   };
 
   return (
@@ -107,6 +114,16 @@ function UserRegistrationPage() {
             required
           />
         </Box>
+        {error && (
+        <Box border="1px solid red" borderRadius="5px" p={3} mb={2}>
+          <Typography textAlign="center">There was an error please try again later.</Typography>
+          <Typography textAlign="center">
+            Error Message:
+            {' '}
+            {error}
+          </Typography>
+        </Box>
+        )}
         <Box>
           <Button type="submit">Submit</Button>
         </Box>

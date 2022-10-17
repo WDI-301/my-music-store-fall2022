@@ -1,5 +1,6 @@
 import { Box, Button, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Axios from '../../utils/Axios';
 import Layout from '../layout/Layout';
@@ -13,6 +14,18 @@ function CreateProductPage() {
     price: '',
     image: '',
   });
+
+  const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (!user || !user.isAdmin) {
+      navigate('/');
+    }
+  }, []);
+
+  if (!user || !user.isAdmin) {
+    return 'redirecting';
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();

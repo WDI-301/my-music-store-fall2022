@@ -26,7 +26,7 @@ function CartItem(props) {
             <Typography fontWeight="bold">
 
               $
-              {cartItem.price / 100}
+              {(cartItem.price / 100).toFixed(2)}
             </Typography>
           </Box>
         </Box>

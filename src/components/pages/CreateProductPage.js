@@ -1,9 +1,11 @@
 import { Box, Button, TextField } from '@mui/material';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Axios from '../../utils/Axios';
 import Layout from '../layout/Layout';
 
 function CreateProductPage() {
+  const navigate = useNavigate();
   const [productData, setProductData] = useState({
     title: '',
     description: '',
@@ -15,7 +17,7 @@ function CreateProductPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await Axios.post('/create-product', {
+    await Axios.post('/create-product', {
       productData: {
         title: productData.title,
         description: productData.description,
@@ -25,7 +27,7 @@ function CreateProductPage() {
       },
     });
 
-    console.log('response: ', response);
+    navigate('/');
   };
 
   return (

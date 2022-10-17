@@ -1,21 +1,20 @@
 import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { productList } from '../../mockData';
+import Axios from '../../utils/Axios';
 import Layout from '../layout/Layout';
 import ProductDisplay from '../ProductDisplay';
-
-// Mocked fetch Data function
-export const fetchProductData = () => new Promise((resolve) => {
-  setTimeout(() => {
-    resolve(productList);
-  }, 4000);
-});
 
 function HomePage() {
   const [products, setProducts] = useState([]);
 
+  // Fetching products from the front end.
   useEffect(() => {
-    fetchProductData().then((response) => setProducts(response));
+    const fetchProducts = async () => {
+      const response = await Axios.get('/get-products');
+      setProducts(response.data.products);
+    };
+
+    fetchProducts();
   }, []);
 
   return (

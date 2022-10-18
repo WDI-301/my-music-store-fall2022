@@ -8,14 +8,29 @@ import CardMedia from '@mui/material/CardMedia';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useShoppingCart } from '../context/shoppingCartContext';
+import { signIn } from '../redux-state/userSlice';
+import Axios from '../utils/Axios';
 
 function ProductDisplay(props) {
   const { addToCart } = useShoppingCart();
   const { productData } = props;
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const isFavorite = user && user.favorites.includes(productData.id);
 
   const onAddToCart = () => {
     addToCart(productData);
+  };
+
+  const addToFavorites = async () => {
+    // Only add to favorites if the user is logged in
+    if (user) {
+      const response = await Axios.post('/update-favorites', { productId: productData.id });
+      dispatch(signIn(response.data.user));
+    }
   };
 
   return (
@@ -40,8 +55,8 @@ function ProductDisplay(props) {
       <CardActions disableSpacing>
         <Box display="flex" justifyContent="space-between" width={1}>
           <Button onClick={onAddToCart}>Add to cart</Button>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
+          <IconButton aria-label="add to favorites" onClick={addToFavorites}>
+            <FavoriteIcon color={isFavorite ? 'error' : undefined} />
           </IconButton>
         </Box>
       </CardActions>

@@ -1,20 +1,25 @@
 import {
   Box, Button, TextField, Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { sampleUserData } from '../../mockData';
+import { Link, useNavigate } from 'react-router-dom';
 import { signIn, signOut } from '../../redux-state/userSlice';
 import Axios from '../../utils/Axios';
 import Layout from '../layout/Layout';
 
 function SignInPage() {
   const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate('/user');
+    }
+  }, [user]);
 
   const dispatch = useDispatch();
   const [error, setError] = useState();
-  console.log('error: ', error);
 
   const [signInForm, setSignInForm] = useState({
     email: '',
@@ -30,35 +35,6 @@ function SignInPage() {
 
     dispatch(signIn(fetchedUser));
   };
-
-  const handleSignOut = async () => {
-    try {
-      await Axios.get('/sign-out');
-      dispatch(signOut());
-      setError(undefined);
-    } catch (e) {
-      setError(e.message);
-    }
-  };
-
-  if (user) {
-    return (
-      <Layout>
-        {error && <Box><Typography>{error}</Typography></Box>}
-        <Box mb={4}>
-          <Typography>
-            Hi
-            {' '}
-            {user.firstName}
-            !
-          </Typography>
-        </Box>
-        <Box>
-          <Button variant="contained" onClick={handleSignOut}>Sign out</Button>
-        </Box>
-      </Layout>
-    );
-  }
 
   return (
     <Layout>

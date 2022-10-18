@@ -5,6 +5,7 @@ import CartPage from './components/pages/CartPage';
 import CreateProductPage from './components/pages/CreateProductPage';
 import HomePage from './components/pages/HomePage';
 import SignInPage from './components/pages/SignInPage';
+import UserPage from './components/pages/UserPage';
 import UserRegistrationPage from './components/pages/UserRegistrationPage';
 import ShoppingCartContextProvider from './context/shoppingCartContext';
 import CustomThemeProvider from './CustomThemeProvider';
@@ -19,7 +20,8 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/user" element={<SignInPage />} />
+              <Route path="/user" element={<UserPage />} />
+              <Route path="/sign-in" element={<SignInPage />} />
               <Route path="/register-user" element={<UserRegistrationPage />} />
               <Route path="/create-product" element={<CreateProductPage />} />
               <Route
